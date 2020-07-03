@@ -22,15 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.javamsdt.person.domain.Person;
 import com.javamsdt.person.service.PersonService;
 
-@Controller
+@RestController
 public class PersonController {
 
 	@Autowired
@@ -42,12 +43,23 @@ public class PersonController {
 		return this.personService.getHelloMessage();
 	}
 
-	@RequestMapping(value = "/persons", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<List<Person>> persons() {
+	@GetMapping(value = "/persons", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public List<Person> persons() {
 
 		List<Person> persons = personService.getPersons();
 		System.out.println(persons);
-		return ResponseEntity.status(HttpStatus.OK).body(persons);
+		return persons;
 	}
+
+	@GetMapping(value = "/persons/{personId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Person> getPersonById(@PathVariable("personId") final long personId) {
+		Person person = personService.getPersonById(personId);
+		if (person.getPersonId() != 0) {
+			return ResponseEntity.status(HttpStatus.OK).body(person);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(person);
+
+		}
+	}
+
 }
