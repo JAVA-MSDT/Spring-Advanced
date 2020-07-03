@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.javamsdt.person.domain.Person;
@@ -33,12 +32,6 @@ public class PersonService {
 	private static final Logger LOGGER = LogManager.getLogger();
 	private List<Person> updatablePersonList = new ArrayList<>();
 
-	@Value("${name:World}")
-	private String name;
-
-	public String getHelloMessage() {
-		return "Hello " + this.name;
-	}
 
 	public List<Person> getUpdatablePersonList() {
 		return updatablePersonList;
