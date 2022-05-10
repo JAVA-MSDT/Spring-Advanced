@@ -5,10 +5,13 @@ import java.util.Set;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "address")
 @Data
+@EqualsAndHashCode(exclude = {"geoLocation", "users"})
 public class Address {
 
     @Id
@@ -29,9 +32,10 @@ public class Address {
     @JoinColumn(name = "geo_location_id")
     private GeoLocation geoLocation;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_address",
             joinColumns = { @JoinColumn(name = "user_address_id", referencedColumnName = "address_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_user_id", referencedColumnName = "user_id") })
+    @ToString.Exclude
     private Set<User> users;
 }

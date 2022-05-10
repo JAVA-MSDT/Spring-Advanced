@@ -5,10 +5,13 @@ import java.util.List;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "geo_location")
 @Data
+@EqualsAndHashCode(exclude = {"addresses"})
 public class GeoLocation {
 
     @Id
@@ -22,7 +25,8 @@ public class GeoLocation {
     @Column(name = "latitude")
     private double latitude;
 
-    @OneToMany(mappedBy = "geoLocation")
+    @OneToMany(mappedBy = "geoLocation", fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Address> addresses;
 
 }
