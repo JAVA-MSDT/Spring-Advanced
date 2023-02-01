@@ -1,0 +1,27 @@
+services:
+  db:
+    container_name: pg
+    image: postgres
+    restart: always
+    environment:
+        PGUSER: security
+        POSTGRES_DB: security
+        POSTGRES_USER: security
+        POSTGRES_PASSWORD: security
+    volumes:
+      - C:\Docker\Postgres\data\security:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+  pgadmin:
+    container_name: pgAdmin
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - db
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - C:\Docker\Postgres\pgadmin\security:/var/lib/pgadmin
+    ports:
+      - 5431:80
