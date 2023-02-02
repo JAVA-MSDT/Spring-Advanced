@@ -3,6 +3,7 @@ package com.securityservice.security.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -52,12 +53,13 @@ public class User {
     @Size(max = 150)
     private String password;
 
+    @Column(name = "account_non_expired")
     private boolean accountNonExpired;
-
+    @Column(name = "account_non_locked")
     private boolean accountNonLocked;
-
+    @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired;
-
+    @Column(name = "enabled")
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY)
