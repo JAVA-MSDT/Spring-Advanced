@@ -21,11 +21,8 @@ public class DbHealthIndicator implements HealthIndicator {
 
     @Override
     public Health health() {
-        if (isDbHealthy()) {
-            return Health.up().withDetail("External Db Health", "Healthy and Up").build();
-        } else {
-            return Health.down().withDetail("External Db Health", "Is Not-Healthy").build();
-        }
+        return isDbHealthy() ? Health.up().withDetail("External Db Health", "Healthy and Up").build()
+                : Health.down().withDetail("External Db Health", "Is Not-Healthy").build();
     }
 
     @ReadOperation
