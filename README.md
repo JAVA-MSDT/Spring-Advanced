@@ -9,16 +9,14 @@ This is the Java Global Mentoring Program: Advanced, which contains a set of mod
 #### Spring Auto Configuration
 
 * Create Basic Spring application which will have Data Source Configuration provided by spring Auto-Configuration:
-
-       - Introduce a configuration(using @Configuration) which should have a method annotated with @Bean which returns a configured data source instance.
-       - Use https://mvnrepository.com/artifact/com.h2database/h2 as a Data Source.
-       - Add test which tests your application by saving an entity to the data source.
+  * Introduce a configuration(using @Configuration) which should have a method annotated with @Bean which returns a configured data source instance.
+  * Use https://mvnrepository.com/artifact/com.h2database/h2 as a Data Source.
+  * Add test which tests your application by saving an entity to the data source.
 #### Custom Configuration
 
 * Create Custom configuration for data source based on conditional properties:
-
-       - Introduce a configuration(using @Configuration) which should return a data source if an instance of provided interface doesn't exist(@ConditionalOnMissingBean).
-       - Add test which tests your application by saving an entity to the data source.
+  * Introduce a configuration(using @Configuration) which should return a data source if an instance of provided interface doesn't exist(@ConditionalOnMissingBean).
+  * Add test which tests your application by saving an entity to the data source.
 #### Spring Actuator
 
 * Enable actuator by adding https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator dependency. 
