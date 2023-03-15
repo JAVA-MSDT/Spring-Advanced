@@ -29,6 +29,9 @@ public class Producer {
         this.kafkaProducer = new KafkaProducer<>(properties);
     }
 
+    /**
+     * To produce a message to sending it to a Kafka server
+     */
     public void produce() {
         Greeting greeting = Greeting.newBuilder()
                 .setGreet("Hello")
@@ -40,6 +43,9 @@ public class Producer {
         LOGGER.log(Level.INFO, "Sending Record: {0}", greeting.getGreet());
     }
 
+    /**
+     * Shutting down producer after it is finishing it is work
+     */
     public void shutdown() {
         kafkaProducer.flush();
         kafkaProducer.close();

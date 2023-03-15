@@ -13,8 +13,12 @@ public class MessageServer extends MessageServiceGrpc.MessageServiceImplBase {
     private static final Logger LOGGER = Logger.getLogger(MessageServer.class.getName());
     private final static String MESSAGE = "Pong";
 
+
+    /**
+     * Sending a message after client called for it.
+     */
     @Override
-    public void receiveMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver) {
+    public void sendMessage(MessageRequest request, StreamObserver<MessageResponse> responseObserver) {
         String message = request.getMessage();
         LOGGER.log(Level.INFO, "Message:: {0} ", message);
         MessageResponse response = MessageResponse.newBuilder()

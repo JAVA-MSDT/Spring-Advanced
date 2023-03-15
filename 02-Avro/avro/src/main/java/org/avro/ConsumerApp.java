@@ -44,6 +44,9 @@ public class ConsumerApp {
         this.consumer = new KafkaConsumer<>(properties);
     }
 
+    /**
+     * Consuming a specific message from Kafka server
+     */
     public void consume() {
         consumer.subscribe(List.of(topic));
         try {
