@@ -3,10 +3,10 @@ package com.rest.controller;
 import java.util.List;
 import java.util.Objects;
 
-import com.rest.cloudserviceimpl.service.SubscriptionServiceImpl;
+import com.rest.cloudserviceimpl.service.ServiceServiceImpl;
 import com.rest.dto.dto.SubscriptionRequestDto;
 import com.rest.dto.dto.SubscriptionResponseDto;
-import com.rest.modelassempler.SubscriptionAssembler;
+import com.rest.modelassempler.ServiceAssembler;
 import com.rest.testutil.SubscriptionUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,16 +25,16 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class SubscriptionControllerTest {
+class ServiceControllerTest {
 
     @InjectMocks
-    private SubscriptionController subscriptionController;
+    private ServiceController serviceController;
 
     @Mock
-    private SubscriptionServiceImpl subscriptionService;
+    private ServiceServiceImpl serviceService;
 
     @Mock
-    private SubscriptionAssembler subscriptionAssembler;
+    private ServiceAssembler serviceAssembler;
 
     @Test
     void getAllSubscription() {
@@ -44,11 +44,11 @@ class SubscriptionControllerTest {
                 EntityModel.of(subscriptionResponseDtos.get(0)));
 
         // When
-        when(subscriptionService.getAllSubscription()).thenReturn(subscriptionResponseDtos);
-        when(subscriptionAssembler.toCollectionModel(any())).thenReturn(CollectionModel.of(subscriptionEntityModels));
+        when(serviceService.getAllSubscription()).thenReturn(subscriptionResponseDtos);
+        when(serviceAssembler.toCollectionModel(any())).thenReturn(CollectionModel.of(subscriptionEntityModels));
 
         // Then
-        ResponseEntity<CollectionModel<EntityModel<SubscriptionResponseDto>>> subscriptionCollectionModelResponseEntity = subscriptionController.getAllSubscription();
+        ResponseEntity<CollectionModel<EntityModel<SubscriptionResponseDto>>> subscriptionCollectionModelResponseEntity = serviceController.getAllSubscription();
         assertEquals(subscriptionCollectionModelResponseEntity.getStatusCode(), HttpStatus.OK);
         assertEquals(Objects.requireNonNull(subscriptionCollectionModelResponseEntity.getBody()).getContent().size(),
                 1);
@@ -63,12 +63,12 @@ class SubscriptionControllerTest {
                 subscriptionResponseDto);
 
         // When
-        when(subscriptionService.getSubscription(anyLong())).thenReturn(subscriptionResponseDto);
-        when(subscriptionAssembler.toModel(any(SubscriptionResponseDto.class))).thenReturn(
+        when(serviceService.getSubscription(anyLong())).thenReturn(subscriptionResponseDto);
+        when(serviceAssembler.toModel(any(SubscriptionResponseDto.class))).thenReturn(
                 subscriptionResponseDtoEntityModel);
 
         // Then
-        ResponseEntity<EntityModel<SubscriptionResponseDto>> subscriptionEntity = subscriptionController.getSubscription(
+        ResponseEntity<EntityModel<SubscriptionResponseDto>> subscriptionEntity = serviceController.getSubscription(
                 subscriptionId);
         assertEquals(subscriptionEntity.getStatusCode(), HttpStatus.OK);
         assertEquals(subscriptionEntity.getBody(), subscriptionResponseDtoEntityModel);
@@ -83,13 +83,13 @@ class SubscriptionControllerTest {
                 subscriptionResponseDto);
 
         // When
-        when(subscriptionService.createSubscription(any(SubscriptionRequestDto.class))).thenReturn(
+        when(serviceService.createSubscription(any(SubscriptionRequestDto.class))).thenReturn(
                 subscriptionResponseDto);
-        when(subscriptionAssembler.toModel(any(SubscriptionResponseDto.class))).thenReturn(
+        when(serviceAssembler.toModel(any(SubscriptionResponseDto.class))).thenReturn(
                 subscriptionResponseDtoEntityModel);
 
         // Then
-        ResponseEntity<EntityModel<SubscriptionResponseDto>> subscriptionResponseEntity = subscriptionController.createSubscription(
+        ResponseEntity<EntityModel<SubscriptionResponseDto>> subscriptionResponseEntity = serviceController.createSubscription(
                 subscriptionRequestDto);
         assertEquals(subscriptionResponseEntity.getStatusCode(), HttpStatus.OK);
         assertEquals(subscriptionResponseEntity.getBody(), subscriptionResponseDtoEntityModel);
@@ -104,13 +104,13 @@ class SubscriptionControllerTest {
                 subscriptionResponseDto);
 
         // When
-        when(subscriptionService.updateSubscription(any(SubscriptionRequestDto.class))).thenReturn(
+        when(serviceService.updateSubscription(any(SubscriptionRequestDto.class))).thenReturn(
                 subscriptionResponseDto);
-        when(subscriptionAssembler.toModel(any(SubscriptionResponseDto.class))).thenReturn(
+        when(serviceAssembler.toModel(any(SubscriptionResponseDto.class))).thenReturn(
                 subscriptionResponseDtoEntityModel);
 
         // Then
-        ResponseEntity<EntityModel<SubscriptionResponseDto>> subscriptionResponseEntity = subscriptionController.updateSubscription(
+        ResponseEntity<EntityModel<SubscriptionResponseDto>> subscriptionResponseEntity = serviceController.updateSubscription(
                 subscriptionRequestDto);
         assertEquals(subscriptionResponseEntity.getStatusCode(), HttpStatus.OK);
         assertEquals(subscriptionResponseEntity.getBody(), subscriptionResponseDtoEntityModel);
@@ -122,10 +122,10 @@ class SubscriptionControllerTest {
         Long subscriptionId = SubscriptionUtil.ID;
 
         // When
-        when(subscriptionService.deleteSubscription(anyLong())).thenReturn(true);
+        when(serviceService.deleteSubscription(anyLong())).thenReturn(true);
 
         // Then
-        boolean subscriptionDeleteStatus = subscriptionController.deleteSubscription(subscriptionId);
+        boolean subscriptionDeleteStatus = serviceController.deleteSubscription(subscriptionId);
         assertTrue(subscriptionDeleteStatus);
     }
 }

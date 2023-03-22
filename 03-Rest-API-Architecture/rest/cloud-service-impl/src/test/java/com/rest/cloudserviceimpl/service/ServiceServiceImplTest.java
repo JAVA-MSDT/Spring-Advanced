@@ -11,7 +11,7 @@ import com.rest.dto.dto.SubscriptionRequestDto;
 import com.rest.dto.dto.SubscriptionResponseDto;
 import com.rest.dto.model.Subscription;
 import com.rest.dto.model.User;
-import com.rest.servicedb.repository.SubscriptionRepository;
+import com.rest.servicedb.repository.ServiceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,12 +27,12 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class SubscriptionServiceImplTest {
+class ServiceServiceImplTest {
 
     @InjectMocks
-    private SubscriptionServiceImpl subscriptionService;
+    private ServiceServiceImpl serviceService;
     @Mock
-    private SubscriptionRepository subscriptionRepository;
+    private ServiceRepository serviceRepository;
     @Mock
     private UserServiceImpl userService;
 
@@ -49,11 +49,11 @@ class SubscriptionServiceImplTest {
         SubscriptionResponseDto subscriptionResponseDto = SubscriptionUtil.subscriptionResponseDto();
 
         // When
-        when(subscriptionRepository.findAll()).thenReturn(List.of(subscription));
+        when(serviceRepository.findAll()).thenReturn(List.of(subscription));
         when(subscriptionResponseConverter.convert(any(Subscription.class))).thenReturn(subscriptionResponseDto);
 
         // Then
-        List<SubscriptionResponseDto> subscriptionResponseDtos = subscriptionService.getAllSubscription();
+        List<SubscriptionResponseDto> subscriptionResponseDtos = serviceService.getAllSubscription();
         assertEquals(subscriptionResponseDtos.size(), 1);
     }
 
@@ -64,22 +64,22 @@ class SubscriptionServiceImplTest {
         SubscriptionResponseDto subscriptionResponseDto = SubscriptionUtil.subscriptionResponseDto();
 
         // When
-        when(subscriptionRepository.findById(anyLong())).thenReturn(Optional.of(subscription));
+        when(serviceRepository.findById(anyLong())).thenReturn(Optional.of(subscription));
         when(subscriptionResponseConverter.convert(any(Subscription.class))).thenReturn(subscriptionResponseDto);
 
         // Then
-        SubscriptionResponseDto subscriptionResponseDtoDB = subscriptionService.getSubscription(SubscriptionUtil.ID);
+        SubscriptionResponseDto subscriptionResponseDtoDB = serviceService.getSubscription(SubscriptionUtil.ID);
         assertEquals(subscriptionResponseDtoDB.getUserId(), subscription.getUser().getId());
     }
     @Test
     void getSubscription_fail() {
         // Given
         // When
-        when(subscriptionRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(serviceRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // Then
         assertThrows(ResponseStatusException.class, () -> {
-            subscriptionService.getSubscription(SubscriptionUtil.ID);
+            serviceService.getSubscription(SubscriptionUtil.ID);
         }, String.format(SubscriptionUtil.SUBSCRIPTION_NOT_FOUND_EXCEPTION_MESSAGE, UserUtil.ID));
     }
 
@@ -94,11 +94,11 @@ class SubscriptionServiceImplTest {
         // When
         when(subscriptionConverter.convert(any(SubscriptionRequestDto.class), any(User.class))).thenReturn(subscription);
         when(userService.findUserById(anyLong())).thenReturn(user);
-        when(subscriptionRepository.save(any(Subscription.class))).thenReturn(subscription);
+        when(serviceRepository.save(any(Subscription.class))).thenReturn(subscription);
         when(subscriptionResponseConverter.convert(any(Subscription.class))).thenReturn(subscriptionResponseDto);
 
         // Then
-        SubscriptionResponseDto subscriptionResponseDtoDB = subscriptionService.createSubscription(subscriptionRequestDto);
+        SubscriptionResponseDto subscriptionResponseDtoDB = serviceService.createSubscription(subscriptionRequestDto);
         assertEquals(subscriptionResponseDtoDB.getUserId(), subscription.getUser().getId());
     }
 
@@ -112,14 +112,14 @@ class SubscriptionServiceImplTest {
         User user = UserUtil.user();
 
         // When
-        when(subscriptionRepository.findById(anyLong())).thenReturn(Optional.of(subscription));
+        when(serviceRepository.findById(anyLong())).thenReturn(Optional.of(subscription));
         when(subscriptionConverter.convert(any(SubscriptionRequestDto.class), any(User.class))).thenReturn(subscription);
         when(userService.findUserById(anyLong())).thenReturn(user);
-        when(subscriptionRepository.save(any(Subscription.class))).thenReturn(subscription);
+        when(serviceRepository.save(any(Subscription.class))).thenReturn(subscription);
         when(subscriptionResponseConverter.convert(any(Subscription.class))).thenReturn(subscriptionResponseDto);
 
         // Then
-        SubscriptionResponseDto subscriptionResponseDtoDB = subscriptionService.updateSubscription(subscriptionRequestDto);
+        SubscriptionResponseDto subscriptionResponseDtoDB = serviceService.updateSubscription(subscriptionRequestDto);
         assertEquals(subscriptionResponseDtoDB.getUserId(), subscription.getUser().getId());
     }
 
@@ -129,10 +129,10 @@ class SubscriptionServiceImplTest {
         Subscription subscription = SubscriptionUtil.subscription();
 
         // When
-        when(subscriptionRepository.findById(anyLong())).thenReturn(Optional.of(subscription));
+        when(serviceRepository.findById(anyLong())).thenReturn(Optional.of(subscription));
 
         // Then
-        boolean subscriptionDeleteStatus = subscriptionService.deleteSubscription(SubscriptionUtil.ID);
+        boolean subscriptionDeleteStatus = serviceService.deleteSubscription(SubscriptionUtil.ID);
         assertTrue(subscriptionDeleteStatus);
     }
 
@@ -140,11 +140,11 @@ class SubscriptionServiceImplTest {
     void deleteSubscription_fail() {
         // Given
         // When
-        when(subscriptionRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(serviceRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // Then
         assertThrows(ResponseStatusException.class, () -> {
-            subscriptionService.deleteSubscription(SubscriptionUtil.ID);
+            serviceService.deleteSubscription(SubscriptionUtil.ID);
         }, String.format(SubscriptionUtil.SUBSCRIPTION_NOT_FOUND_EXCEPTION_MESSAGE, UserUtil.ID));
     }
 }

@@ -8,8 +8,8 @@ import com.rest.dto.converter.SubscriptionResponseConverter;
 import com.rest.dto.dto.SubscriptionRequestDto;
 import com.rest.dto.dto.SubscriptionResponseDto;
 import com.rest.dto.model.Subscription;
-import com.rest.serviceapi.service.SubscriptionService;
-import com.rest.servicedb.repository.SubscriptionRepository;
+import com.rest.serviceapi.service.ServiceService;
+import com.rest.servicedb.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-public class SubscriptionServiceImpl implements SubscriptionService {
+public class ServiceServiceImpl implements ServiceService {
 
-    private final SubscriptionRepository subscriptionRepository;
+    private final ServiceRepository serviceRepository;
 
     private final UserServiceImpl userService;
 
@@ -29,7 +29,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public List<SubscriptionResponseDto> getAllSubscription() {
-        return subscriptionRepository.findAll().stream()
+        return serviceRepository.findAll().stream()
                 .map(subscriptionResponseConverter::convert)
                 .collect(Collectors.toList());
     }
@@ -41,7 +41,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public SubscriptionResponseDto createSubscription(SubscriptionRequestDto subscriptionRequestDto) {
-        return subscriptionResponseConverter.convert(subscriptionRepository.save(subscriptionConverter.convert(subscriptionRequestDto,
+        return subscriptionResponseConverter.convert(serviceRepository.save(subscriptionConverter.convert(subscriptionRequestDto,
                 userService.findUserById(subscriptionRequestDto.getUserId()))));
     }
 
@@ -55,14 +55,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         }
 
         assert subscription != null;
-        return subscriptionResponseConverter.convert(subscriptionRepository.save(subscription));
+        return subscriptionResponseConverter.convert(serviceRepository.save(subscription));
     }
 
     @Override
     public boolean deleteSubscription(Long subscriptionId) {
         Subscription subscription = findSubscriptionById(subscriptionId);
         if (subscription != null) {
-            subscriptionRepository.delete(subscription);
+            serviceRepository.delete(subscription);
             return true;
         } else {
             return false;
@@ -70,7 +70,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     private Subscription findSubscriptionById(Long id) {
-        return subscriptionRepository.findById(id)
+        return serviceRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("Subscription with that ID: %d Not found.", id)));
     }

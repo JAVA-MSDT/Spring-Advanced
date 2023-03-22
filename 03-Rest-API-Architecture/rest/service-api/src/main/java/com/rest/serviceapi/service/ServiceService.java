@@ -5,7 +5,7 @@ import java.util.List;
 import com.rest.dto.dto.SubscriptionRequestDto;
 import com.rest.dto.dto.SubscriptionResponseDto;
 
-public interface SubscriptionService {
+public interface ServiceService {
 
     List<SubscriptionResponseDto> getAllSubscription();
 

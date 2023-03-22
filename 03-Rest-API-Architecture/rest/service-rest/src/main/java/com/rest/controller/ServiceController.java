@@ -1,9 +1,9 @@
 package com.rest.controller;
 
-import com.rest.cloudserviceimpl.service.SubscriptionServiceImpl;
+import com.rest.cloudserviceimpl.service.ServiceServiceImpl;
 import com.rest.dto.dto.SubscriptionRequestDto;
 import com.rest.dto.dto.SubscriptionResponseDto;
-import com.rest.modelassempler.SubscriptionAssembler;
+import com.rest.modelassempler.ServiceAssembler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -20,40 +20,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/subscriptions")
 @RequiredArgsConstructor
-public class SubscriptionController {
+public class ServiceController {
 
-    private final SubscriptionServiceImpl subscriptionService;
-    private final SubscriptionAssembler subscriptionAssembler;
+    private final ServiceServiceImpl serviceService;
+    private final ServiceAssembler serviceAssembler;
 
     @GetMapping
     public ResponseEntity<CollectionModel<EntityModel<SubscriptionResponseDto>>> getAllSubscription() {
-        return ResponseEntity.ok(subscriptionAssembler.toCollectionModel(subscriptionService.getAllSubscription()));
+        return ResponseEntity.ok(serviceAssembler.toCollectionModel(serviceService.getAllSubscription()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<SubscriptionResponseDto>> getSubscription(@PathVariable("id") Long subscriptionId) {
-        SubscriptionResponseDto subscriptionResponseDto = subscriptionService.getSubscription(subscriptionId);
-        EntityModel<SubscriptionResponseDto> subscriptionResponseDtoEntityModel = subscriptionAssembler.toModel(subscriptionResponseDto);
+        SubscriptionResponseDto subscriptionResponseDto = serviceService.getSubscription(subscriptionId);
+        EntityModel<SubscriptionResponseDto> subscriptionResponseDtoEntityModel = serviceAssembler.toModel(subscriptionResponseDto);
         return ResponseEntity.ok(subscriptionResponseDtoEntityModel);
     }
 
     @PostMapping
     public ResponseEntity<EntityModel<SubscriptionResponseDto>> createSubscription(@RequestBody SubscriptionRequestDto subscriptionRequestDto) {
-        SubscriptionResponseDto subscriptionResponseDto = subscriptionService.createSubscription(subscriptionRequestDto);
-        EntityModel<SubscriptionResponseDto> subscriptionResponseDtoEntityModel = subscriptionAssembler.toModel(subscriptionResponseDto);
+        SubscriptionResponseDto subscriptionResponseDto = serviceService.createSubscription(subscriptionRequestDto);
+        EntityModel<SubscriptionResponseDto> subscriptionResponseDtoEntityModel = serviceAssembler.toModel(subscriptionResponseDto);
         return ResponseEntity.ok(subscriptionResponseDtoEntityModel);
     }
 
     @PutMapping
     public ResponseEntity<EntityModel<SubscriptionResponseDto>> updateSubscription(@RequestBody SubscriptionRequestDto subscriptionRequestDto) {
-        SubscriptionResponseDto subscriptionResponseDto = subscriptionService.updateSubscription(subscriptionRequestDto);
-        EntityModel<SubscriptionResponseDto> subscriptionResponseDtoEntityModel = subscriptionAssembler.toModel(subscriptionResponseDto);
+        SubscriptionResponseDto subscriptionResponseDto = serviceService.updateSubscription(subscriptionRequestDto);
+        EntityModel<SubscriptionResponseDto> subscriptionResponseDtoEntityModel = serviceAssembler.toModel(subscriptionResponseDto);
         return ResponseEntity.ok(subscriptionResponseDtoEntityModel);
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteSubscription(@PathVariable("id") Long subscriptionId) {
-        return subscriptionService.deleteSubscription(subscriptionId);
+        return serviceService.deleteSubscription(subscriptionId);
     }
 
 }
