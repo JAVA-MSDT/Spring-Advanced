@@ -13,7 +13,6 @@ public class UserUtil {
     public static final String USER_NAME = "username";
     public static final LocalDate BIRTH_DATE = LocalDate.now();
     public static final String BIRTH_DATE_STRING = String.valueOf(LocalDate.now());
-    public static final String USER_NOT_FOUND_EXCEPTION_MESSAGE = "User with that ID: %d Not found.";
 
 
     public static User user() {
