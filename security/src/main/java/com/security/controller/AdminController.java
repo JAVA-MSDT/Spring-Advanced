@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class InfoController {
+public class AdminController {
 
-    @GetMapping("/info")
-    public String info() {
-        return "pages/info";
+    @GetMapping("/admin")
+    public String login() {
+        return "pages/admin";
     }
 
 }
