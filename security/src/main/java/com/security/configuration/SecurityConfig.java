@@ -1,5 +1,6 @@
 package com.security.configuration;
 
+import com.security.handler.CustomAuthenticationFailureHandler;
 import com.security.modal.ERole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,16 +32,19 @@ public class SecurityConfig {
     public static final String VIEW_INFO = ERole.VIEW_INFO.name();
 
     @Bean
-    public SecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityWebFilterChain(HttpSecurity http, CustomAuthenticationFailureHandler authenticationFailureHandler) throws Exception {
         return http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/about").permitAll()
+                                .requestMatchers("/about", "/login*").permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/info").hasAnyAuthority(USER, VIEW_INFO, ADMIN, VIEW_ADMIN)
                                 .requestMatchers("/admin").hasAnyAuthority(ADMIN, VIEW_ADMIN)
                                 .anyRequest().authenticated()
                 )
-                .formLogin(formLogin -> formLogin.loginPage("/login").permitAll())
+                .formLogin(formLogin ->
+                        formLogin.loginPage("/login")
+                                .failureHandler(authenticationFailureHandler)
+                                .permitAll())
                 .logout(formLogout -> formLogout.deleteCookies("JSESSIONID")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/logoutSuccess")
