@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,12 +35,16 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/about").permitAll()
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers("/info").hasAnyAuthority(USER, VIEW_INFO, ADMIN, VIEW_ADMIN)
                                 .requestMatchers("/admin").hasAnyAuthority(ADMIN, VIEW_ADMIN)
                                 .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                .logout(Customizer.withDefaults())
+                .formLogin(formLogin -> formLogin.loginPage("/login").permitAll())
+                .logout(formLogout -> formLogout.deleteCookies("JSESSIONID")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/logoutSuccess")
+                        .permitAll())
                 .build();
     }
 
