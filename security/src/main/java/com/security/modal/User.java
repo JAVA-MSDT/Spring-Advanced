@@ -3,6 +3,7 @@ package com.security.modal;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,9 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private boolean enabled;
+    @Column(name = "blocking_time")
+    private LocalDateTime blockingTime;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();

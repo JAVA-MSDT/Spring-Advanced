@@ -25,6 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(USER_NOT_FOUND);
         } else {
             if (loginAttemptService.isBlocked(username)) {
+                user.setEnabled(false);
+                user.setBlockingTime(loginAttemptService.getCachedValue(username).getBlockedTimestamp());
+                userRepository.save(user);
                 throw new LockedException(CustomAuthenticationFailureHandler.USER_IS_BLOCKED);
             }
         }

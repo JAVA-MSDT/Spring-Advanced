@@ -2,6 +2,7 @@ package com.security.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.security.modal.User;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,26 +11,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
     private Long id;
 
     private String username;
 
     private String email;
+    private boolean enabled;
 
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().name()))
@@ -39,6 +34,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
+                user.isEnabled(),
                 user.getPassword(),
                 authorities);
     }
@@ -83,6 +79,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 }
