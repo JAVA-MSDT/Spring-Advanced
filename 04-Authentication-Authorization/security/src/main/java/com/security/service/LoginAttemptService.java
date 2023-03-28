@@ -15,13 +15,13 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class LoginAttemptService {
     public static final int MAX_ATTEMPT = 1;
-    public static final int BLOCK_DURATION_PER_SECOND = 2;
+    public static final int BLOCK_DURATION_PER_MINUTES = 2;
 
     private final LoadingCache<String, CachedValue> attemptsCache;
 
     public LoginAttemptService() {
         attemptsCache = CacheBuilder.newBuilder()
-                .expireAfterWrite(BLOCK_DURATION_PER_SECOND, TimeUnit.MINUTES)
+                .expireAfterWrite(BLOCK_DURATION_PER_MINUTES, TimeUnit.MINUTES)
                 .build(new CacheLoader<>() {
                     @Override
                     public CachedValue load(String s) throws Exception {
