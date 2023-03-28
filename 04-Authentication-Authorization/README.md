@@ -47,3 +47,22 @@ Authentication and Authorization Using Spring Security
 13. User (sender and recipient) must be authorized and have "STANDARD" permission.
 
 14. Use docker containers to implement solution.
+
+### Solution
+ * Done implementing till point 11, then point 14.
+ * Docker compose file contains 2 images, one for PostgreSql and the second for PG-Admin.
+ * You can ccess the PG-Admin using localhost:5431 url, **Login**: admin@admin.com, **password**: admin
+ * The app is Web MVC not rest, so you wcan after access the front-end part using the localhost:8080 to interact with the application
+ * Using flyway migration DB will be populated  with the nesseccury records to test the project, check migration folder under resources/db/migration
+ * Some of the url are admin access only, some are public and some for user view role, check the java security configuration file for details.
+ * After few attempts to login the user will be blocked, so to unblock it, Admin access required to the localhost:8080/blocked url to see who is blocked and to unblock it as well.
+ 
+   
+### Running the app
+ * For first time you need to run mvn clean install from the project root where is the pom.xml file under rest folder exicts, using command line or maven pugin in your idea.
+ * Run Docker compose file under security/docker folder to start the DB before starting the application.
+ * Run the application from the java class SecurityApplication.java.
+ * Browse to localhost:8080 then you can experiment with the application.
+
+   
+   
