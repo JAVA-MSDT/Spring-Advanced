@@ -2,13 +2,13 @@ package com.security.listener;
 
 import com.security.repository.UserRepository;
 import com.security.service.LoginAttemptService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
     private final LoginAttemptService loginAttemptService;
     private final UserRepository userRepository;

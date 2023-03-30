@@ -3,7 +3,7 @@ package com.security.controller;
 import com.security.modal.User;
 import com.security.repository.UserRepository;
 import com.security.service.LoginAttemptService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BlockedUserController {
     public static final String BLOCKED_USERS = "blockedUsers";
     private final UserRepository userRepository;
