@@ -5,3 +5,4 @@
 * Port 8484
 * More details find it in the controller call to the specific endpoint
 * Find a postman collection inside the project.
+* To run the project, just run it from the main method without any environment or extra configuration
