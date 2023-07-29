@@ -3,7 +3,7 @@ Java Mentoring Program Advanced: Backend Services
 ## Description
 This is the Java Global Mentoring Program: Advanced, which contains a set of modules aimed to cover technical gaps and to enrich the expertise of  senior level engineers in Java technologies stack.
 * Program contains of 4 Main Tasks;
-## Spring foundation
+## 01 - Spring foundation
 ### Task 
 #### Description
 #### Spring Auto Configuration
@@ -118,3 +118,53 @@ This is the Java Global Mentoring Program: Advanced, which contains a set of mod
 23. Implement REST APIs according to all Richardson Maturity Level (0 - 3).
 
 24. Make sample requests to UserController and ServiceController, provide screenshots/responses.
+
+## 04 - Authentication-Authorization  
+### Task 
+#### Description
+##### Necessary Tools
+
+* Java Development Kit 11+
+* Apache Maven 3.6.0+
+* Git 2.24+
+* Spring 5
+* Spring Boot 2+
+
+##### Task
+
+(1 star)
+
+1. Create Spring Boot MVC project.
+
+2. Create REST endpoint "GET /info" that provide random stats (ex: "MVC application"). Test this endpoint.
+
+3. Add Spring Security module to your project and configure it for authenticated access to all resources. Use email/password combination for it.
+
+(2 starts)
+
+4. Use a non-embedded DB to store users.
+
+5. Use salt and hashing to store user passwords.
+
+6. Create additional REST endpoint "GET /about" and configure non-authenticated access to it.
+
+(3-4 starts)
+
+7. Create one more REST endpoint "GET /admin".
+
+8. Now you need to add authorised access to "GET /info" and "GET /admin", add "VIEW_INFO", "VIEW_ADMIN" permissions for it. Create 3 users with different combination of permissions.
+
+9. Create new Login/Logout pages and configure Spring Security to use new Login/Logout.
+
+10. Add Brute Force protector. BLock user email for 5 minute on 3 unsuccessful login.
+
+11. Create an endpoint to show blocked users
+
+(5 start)
+
+12. Implement a new Spring Boot MVC application called "Secret providers". Application should provide page with text form. After sending a secret, application must generate uniq link address, to provide one-time access to secret information. After this information must be removed from application.
+
+13. User (sender and recipient) must be authorized and have "STANDARD" permission.
+
+14. Use docker containers to implement solution.
+
