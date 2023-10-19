@@ -1,6 +1,6 @@
-package com.securityservice.security.repository;
+package com.javamsdt.security.repository;
 
-import com.securityservice.security.model.Role;
+import com.javamsdt.security.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Integer> {

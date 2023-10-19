@@ -1,7 +1,7 @@
-package com.securityservice.security.controller;
+package com.javamsdt.security.controller;
 
-import com.securityservice.security.model.Role;
-import com.securityservice.security.repository.RoleRepository;
+import com.javamsdt.security.repository.RoleRepository;
+import com.javamsdt.security.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/v1/roles")
+@RequestMapping(value = "${app.api.version}/roles")
 @RequiredArgsConstructor
 public class RoleController {
 
@@ -20,7 +20,7 @@ public class RoleController {
 
     @GetMapping
     public ResponseEntity<?> getRoles() {
-        System.out.println("Save Role: getRoles");
+        System.out.println("Get Role: getRoles");
         return new ResponseEntity<>(roleRepository.findAll(), HttpStatus.OK);
     }
 

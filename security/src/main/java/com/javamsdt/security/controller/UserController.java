@@ -1,6 +1,6 @@
-package com.securityservice.security.controller;
+package com.javamsdt.security.controller;
 
-import com.securityservice.security.repository.UserRepository;
+import com.javamsdt.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/v1/users")
+@RequestMapping(value = "${app.api.version}/users")
 @RequiredArgsConstructor
 public class UserController {
 
