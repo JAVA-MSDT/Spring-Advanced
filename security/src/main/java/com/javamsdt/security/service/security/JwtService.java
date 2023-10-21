@@ -1,4 +1,4 @@
-package com.javamsdt.security.service;
+package com.javamsdt.security.service.security;
 
 import java.security.Key;
 import java.util.Date;

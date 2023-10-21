@@ -1,4 +1,4 @@
-package com.javamsdt.security.service;
+package com.javamsdt.security.service.security;
 
 import com.javamsdt.security.dao.request.SignInRequest;
 import com.javamsdt.security.dao.request.SignUpRequest;
@@ -25,7 +25,9 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(RoleEnum.USER)
+                .role(request.getRole() == null
+                        ? RoleEnum.USER
+                        : request.getRole())
                 .enabled(true)
                 .accountNonExpired(true)
                 .accountNonLocked(true)
@@ -39,9 +41,9 @@ public class AuthenticationService {
 
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Username or password."));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }

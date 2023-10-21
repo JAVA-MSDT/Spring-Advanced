@@ -3,7 +3,7 @@ package com.javamsdt.security.controller;
 import com.javamsdt.security.dao.request.SignInRequest;
 import com.javamsdt.security.dao.request.SignUpRequest;
 import com.javamsdt.security.dao.response.JwtAuthenticationResponse;
-import com.javamsdt.security.service.AuthenticationService;
+import com.javamsdt.security.service.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
