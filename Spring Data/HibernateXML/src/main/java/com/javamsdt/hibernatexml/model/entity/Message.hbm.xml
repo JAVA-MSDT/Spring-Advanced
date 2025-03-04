@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "com.javamsdt.hibernatexml.model.entity.Message" table = "message_table"
+    catalog="messagerepository">
+
+        <meta attribute = "class-description">
+            This class contains the Messages detail.
+        </meta>
+
+        <id name = "id" type = "java.lang.Integer">
+            <column name="message_id"/>
+            <generator class="identity"/>
+        </id>
+
+        <property name = "message" type = "java.lang.string">
+         <column name="message" length="50"/>
+        </property>
+    </class>
+</hibernate-mapping>
