@@ -1,5 +1,5 @@
-# Java-Mentoring-Program-Advanced-Backend-Services
-Java Mentoring Program Advanced: Backend Services
+# Spring-Mentoring-Program-Advanced-Backend-Services
+Spring Mentoring Program Advanced: Backend Services
 ## Description
 This is the Java Global Mentoring Program: Advanced, which contains a set of modules aimed to cover technical gaps and to enrich the expertise of  senior level engineers in Java technologies stack.
 * Program contains of 4 Main Tasks;
